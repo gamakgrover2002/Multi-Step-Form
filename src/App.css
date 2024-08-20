@@ -1,0 +1,239 @@
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --success-color: #27ae60;
+  --danger-color: #e74c3c;
+  --error-color: #c0392b;
+  --font-family: Arial, sans-serif;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --padding: 20px;
+  --input-padding: 12px;
+  --font-size: 16px;
+}
+
+body {
+  font-family: var(--font-family);
+}
+
+.form {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--padding);
+  background-color: #ffffff;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--input-padding);
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: var(--font-size);
+  transition: border-color 0.3s;
+}
+
+.form-input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.form-input.error {
+  border-color: var(--error-color);
+}
+
+.form-button,
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius);
+  color: #fff;
+  background-color: var(--primary-color);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  margin: 5px;
+  width: 10vw;
+}
+
+.form-button:hover,
+.button:hover {
+  background-color: #2980b9;
+}
+
+.form-button:active,
+.button:active {
+  background-color: #1f6d9d;
+}
+
+.button.next {
+  background-color: var(--primary-color);
+}
+
+.button.prev {
+  background-color: var(--secondary-color);
+}
+
+.button.add {
+  background-color: var(--success-color);
+}
+
+.button.remove {
+  background-color: var(--danger-color);
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.autocomplete-container {
+  position: relative;
+  width: 100%;
+}
+
+.autocomplete-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: var(--font-size);
+  box-sizing: border-box;
+}
+
+.autocomplete-input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.autocomplete-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-top: none;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.autocomplete-suggestion {
+  padding: 12px;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+.autocomplete-suggestion:hover {
+  background-color: #f0f0f0;
+}
+
+.autocomplete-suggestion:active {
+  background-color: #e0e0e0;
+}
+
+.image-input {
+  width: 200px;
+  height: 200px;
+}
+
+.drop-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px dashed #ddd;
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  background-color: #f9f9f9;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.drop-area:hover {
+  background-color: #e0e0e0;
+}
+
+.image-preview {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.image-preview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+}
+
+@media (max-width: 600px) {
+  .form {
+    padding: 15px;
+  }
+
+  .form-input,
+  .autocomplete-input {
+    padding: 10px;
+  }
+
+  .form-button,
+  .button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .drop-area {
+    padding: 15px;
+  }
+
+  .image-input {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.form-button.next-button {
+  background-color: var(--success-color);
+}
+
+.form-button.prev-button {
+  background-color: var(--primary-color);
+}
+
+.form-button.add-button {
+  background-color: var(--success-color);
+}
+
+.form-button.submit-button {
+  background-color: var(--danger-color);
+}
+
+.form-button.form-button-cancel {
+  background-color: #7f8c8d;
+}
+
+.form-button.form-button-update {
+  background-color: var(--primary-color);
+}
+.form-submitted {
+  padding: 20px;
+  border: 2px solid #4caf50;
+  background-color: #dff0d8;
+  color: #3c763d;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+}

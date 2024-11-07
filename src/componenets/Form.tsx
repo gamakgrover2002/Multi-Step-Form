@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMultiForm } from "../hooks/useMultiForm";
 import { Data } from "../model/Data";
 import { useForm, useFieldArray } from "react-hook-form";
-
+import Pagination from "./Pagination";
 import PersonalForm from "./personalForm";
 import UploadForm from "./uploadForm";
 import FamilyForm from "./familyForm";
@@ -429,6 +429,7 @@ const Form: React.FC = () => {
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <Pagination currentPage={currentStep} totalPages={4} />
       {renderStep()}
     </form>
   );

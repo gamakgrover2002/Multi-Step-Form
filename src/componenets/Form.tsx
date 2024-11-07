@@ -8,7 +8,7 @@ import UploadForm from "./uploadForm";
 import FamilyForm from "./familyForm";
 import AddressForm from "./addressForm";
 import SubmissionSuccessful from "./submitSuccessful";
-
+import { DragEvent } from "react";
 const Form: React.FC = () => {
   const { prevPage, nextPage, currentStep, setPage } = useMultiForm(5);
   const { control, handleSubmit, formState, setValue } = useForm<Data>({
@@ -27,10 +27,6 @@ const Form: React.FC = () => {
     },
   });
 
-  const [selectedImage, setSelectedImage] = useState<string>(
-    "https://static.thenounproject.com/png/49665-200.png"
-  );
-
   const { fields, append, remove } = useFieldArray({ control, name: "family" });
   const {
     fields: documentFields,
@@ -48,16 +44,15 @@ const Form: React.FC = () => {
     console.log(data);
   };
 
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (event: DragEvent<HTMLElement>) => {
     event.preventDefault();
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (event: DragEvent<HTMLElement>) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
       setValue("image", imageUrl);
     }
   };
@@ -252,14 +247,10 @@ const Form: React.FC = () => {
           <div className="step step-4">
             <UploadForm
               control={control}
-              handleSubmit={handleSubmit}
-              onSubmit={onSubmit}
               errors={errors}
               documentFields={documentFields}
               appendDocument={appendDocument}
               removeDocument={removeDocument}
-              selectedImage={selectedImage}
-              setSelectedImage={setSelectedImage}
               handleDragOver={handleDragOver}
               handleDrop={handleDrop}
             />

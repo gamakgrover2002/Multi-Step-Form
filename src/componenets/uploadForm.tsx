@@ -8,14 +8,14 @@ import {
 } from "react-hook-form";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Data } from "../model/Data";
-
+import { DragEventHandler, DragEvent } from "react";
 interface UploadFormProps {
   control: Control<Data>;
   errors: FieldErrors<Data>;
   documentFields: FieldArrayWithId<Data, "documents", "id">[];
   removeDocument: (index: number) => void;
-  handleDragOver: (event: React.DragEvent<HTMLElement>) => void;
-  handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
+  handleDragOver: (event: DragEvent<HTMLElement>) => void;
+  handleDrop: DragEventHandler<HTMLLabelElement>;
   appendDocument: UseFieldArrayAppend<Data, "documents">;
 }
 

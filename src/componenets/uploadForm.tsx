@@ -32,26 +32,21 @@ const UploadForm: React.FC<UploadFormProps> = ({
     "https://static.thenounproject.com/png/49665-200.png"
   );
 
-  // State to store URLs of uploaded documents
   const [documentUrls, setDocumentUrls] = useState<string[]>([]);
 
-  // Handle file input change
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       const fileUrl = URL.createObjectURL(file);
 
-      // Update document URLs state
       setDocumentUrls((prevUrls) => [...prevUrls, fileUrl]);
 
-      // Cleanup function to revoke the URL
       return () => {
         URL.revokeObjectURL(fileUrl);
       };
     }
   };
 
-  // Clean up URLs when component unmounts or documentUrls change
   useEffect(() => {
     return () => {
       documentUrls.forEach((url) => URL.revokeObjectURL(url));

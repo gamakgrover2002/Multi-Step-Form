@@ -15,7 +15,7 @@ interface UploadFormProps {
   documentFields: FieldArrayWithId<Data, "documents", "id">[];
   removeDocument: (index: number) => void;
   handleDragOver: (event: React.DragEvent<HTMLElement>) => void;
-  handleDrop: (event: React.DragEvent<HTMLLabelElement>) => void;
+  handleDrop: (event: React.DragEvent<HTMLDivElement>) => void;
   appendDocument: UseFieldArrayAppend<Data, "documents">;
 }
 
@@ -26,34 +26,37 @@ const UploadForm: React.FC<UploadFormProps> = ({
   removeDocument,
   handleDragOver,
   handleDrop,
-  appendDocument, // Added to props
+  appendDocument,
 }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(
     "https://static.thenounproject.com/png/49665-200.png"
   );
 
+  // State to store URLs of uploaded documents
+  const [documentUrls, setDocumentUrls] = useState<string[]>([]);
+
+  // Handle file input change
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
+      const fileUrl = URL.createObjectURL(file);
 
+      // Update document URLs state
+      setDocumentUrls((prevUrls) => [...prevUrls, fileUrl]);
+
+      // Cleanup function to revoke the URL
       return () => {
-        URL.revokeObjectURL(imageUrl);
+        URL.revokeObjectURL(fileUrl);
       };
     }
   };
 
+  // Clean up URLs when component unmounts or documentUrls change
   useEffect(() => {
     return () => {
-      if (
-        selectedImage &&
-        selectedImage !== "https://static.thenounproject.com/png/49665-200.png"
-      ) {
-        URL.revokeObjectURL(selectedImage);
-      }
+      documentUrls.forEach((url) => URL.revokeObjectURL(url));
     };
-  }, [selectedImage]);
+  }, [documentUrls]);
 
   return (
     <div className="step step-4 upload-input">
@@ -75,7 +78,12 @@ const UploadForm: React.FC<UploadFormProps> = ({
               hidden
               onChange={(event) => {
                 handleFileChange(event);
-                field.onChange(event); // Integrate with react-hook-form
+                field.onChange(event);
+                setSelectedImage(
+                  event.target.files && event.target.files[0]
+                    ? URL.createObjectURL(event.target.files[0])
+                    : null
+                );
               }}
               ref={field.ref}
             />
@@ -104,6 +112,11 @@ const UploadForm: React.FC<UploadFormProps> = ({
                     }`}
                     type="file"
                     {...field}
+                    onChange={(event) => {
+                      handleFileChange(event);
+                      field.onChange(event); // Integrate with react-hook-form
+                    }}
+                    // Prevent setting the value programmatically
                   />
                   {errors.documents?.[index]?.number && (
                     <p className="error-message">
@@ -130,6 +143,22 @@ const UploadForm: React.FC<UploadFormProps> = ({
       >
         Add Document
       </button>
+
+      {/* Display the URLs of uploaded documents */}
+      {documentUrls.length > 0 && (
+        <div className="document-list">
+          <h3>Uploaded Documents:</h3>
+          <ul>
+            {documentUrls.map((url, index) => (
+              <li key={index}>
+                <a href={url} target="_blank" rel="noopener noreferrer">
+                  Document {index + 1}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

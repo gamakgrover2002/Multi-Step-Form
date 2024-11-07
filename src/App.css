@@ -237,3 +237,28 @@ body {
   text-align: center;
   font-size: 16px;
 }
+.page-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0px;
+}
+.active,
+.filled,
+.disabled {
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+.filled {
+  background-color: green;
+}
+.active {
+  background-color: #2980b9;
+}
+.disabled {
+  background-color: red;
+}
